@@ -7,6 +7,7 @@ import Login from "./components/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
+
 //switch is to determine which page we are on, and route to determine which page we are going to
 function App() {
   return (
