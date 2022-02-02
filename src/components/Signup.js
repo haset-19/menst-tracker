@@ -1,15 +1,20 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const emailRef = useRef();
-  const passwordRef = useRef();
-  const passwordConfirmRef = useRef();
+  // const emailRef = useRef();
+  // const passwordRef = useRef();
+  // const passwordConfirmRef = useRef();
+  const [emailRef, setEmailRef] = useState(useRef());
+  const [passwordConfirmRef, setConfirm] = useState(useRef());
+  const [passwordRef, setpasswordRef] = useState(useRef());
   const { signup } = useAuth();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -19,7 +24,14 @@ const Signup = () => {
     try {
       setError("");
       setLoading(true);
+      setSuccessMessage("");
       await signup(emailRef.current.value, passwordRef.current.value);
+
+      navigate("/login");
+      // setEmailRef("");
+      // setpasswordRef("");
+      // setConfirm("");
+      setSuccessMessage("Click Login Here to Login");
     } catch {
       setError("Failed to create an account");
     }
@@ -31,7 +43,14 @@ const Signup = () => {
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
-          {error && <Alert variant="danger">{error}</Alert>}
+          {/* {error && <Alert variant="danger">{error}</Alert>}
+          {successMessage && <Alert variant="primary">{successMessage}</Alert>} */}
+          {successMessage ? (
+            <Alert variant="primary">{successMessage}</Alert>
+          ) : (
+            <Alert variant="danger">{error}</Alert>
+          )}
+
           <Form onSubmit={handleSubmit}>
             <Form.Group id="email">
               <Form.Label>Email</Form.Label>
