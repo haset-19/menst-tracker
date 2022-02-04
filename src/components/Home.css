@@ -1,9 +1,17 @@
-.decorate {
+/* .decorate {
 position:fixed;
 right:0;
 top:0
+} */
+
+.account {
+    
+    text-decoration: crimson;
+    color:crimson
 }
 
-* {
-    background-color:cornsilk;
+
+.try {
+   background-color: #FFD180; 
 }
+  

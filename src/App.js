@@ -7,15 +7,17 @@ import Login from "./components/Login";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
+import Plan from "./components/Plan";
+import NavPage from "./components/NavPage";
 
 //switch is to determine which page we are on, and route to determine which page we are going to
 function App() {
   return (
-    <Container
-      className="d-flex align-items-center justify-content-center"
-      style={{ minHeight: "100vh" }}
-    >
-      <div className="w-100" style={{ maxWidth: "400px" }}>
+    <>
+      {/* // className="d-flex align-items-center justify-content-center" // style= */}
+      {/* {{ minHeight: "100vh" }} */}
+
+      <div>
         <Router>
           <AuthProvider>
             <Routes>
@@ -29,11 +31,12 @@ function App() {
                 path="/forgot-password"
                 element={<ForgotPassword />}
               />
+              <Route exact path="/plan" element={<Plan />} />
             </Routes>
           </AuthProvider>
         </Router>
       </div>
-    </Container>
+    </>
   );
 }
 

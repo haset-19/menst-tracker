@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
 import { Form, Button, Card, Alert } from "react-bootstrap";
+
+import "bootstrap/dist/css/bootstrap.min.css";
 import { useAuth } from "../context/AuthContext";
 import { Link, useNavigate } from "react-router-dom";
 
@@ -25,7 +27,11 @@ export default function Login() {
   }
 
   return (
-    <div>
+    <div
+      className=" m-auto mt-5 w-100 "
+      // className="  align-items-center justify-content-center "
+      style={{ minHeight: 100, maxWidth: 500 }}
+    >
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Log In</h2>

@@ -25,7 +25,11 @@ export default function ForgotPassword() {
   }
 
   return (
-    <div>
+    <div
+      className="w-100 m-auto mt-5
+      "
+      style={{ maxWidth: "400px" }}
+    >
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Password Reset</h2>
@@ -36,7 +40,7 @@ export default function ForgotPassword() {
               <Form.Label>Email</Form.Label>
               <Form.Control type="email" ref={emailRef} required />
             </Form.Group>
-            <Button disabled={loading} className="w-100" type="submit">
+            <Button disabled={loading} className="w-100 mt-2" type="submit">
               Reset Password
             </Button>
           </Form>

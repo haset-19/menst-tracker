@@ -39,7 +39,7 @@ const Signup = () => {
   }
 
   return (
-    <div>
+    <div className="w-100 m-auto mt-5" style={{ maxWidth: "400px" }}>
       <Card>
         <Card.Body>
           <h2 className="text-center mb-4">Sign Up</h2>
