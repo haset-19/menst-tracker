@@ -9,6 +9,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import Plan from "./components/Plan";
 import NavPage from "./components/NavPage";
+import DeleteMsg from "./components/DeleteMsg";
 
 //switch is to determine which page we are on, and route to determine which page we are going to
 function App() {
@@ -32,6 +33,7 @@ function App() {
                 element={<ForgotPassword />}
               />
               <Route exact path="/plan" element={<Plan />} />
+              <Route exact path="/deleteMsg" element={<DeleteMsg />} />
             </Routes>
           </AuthProvider>
         </Router>

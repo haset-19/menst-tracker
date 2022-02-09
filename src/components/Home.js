@@ -1,21 +1,13 @@
-import { React, useEffect, useRef, useState } from "react";
-import {
-  Card,
-  Form,
-  Button,
-  Alert,
-  Container,
-  Row,
-  Col,
-} from "react-bootstrap";
+import { React, useState, useEffect } from "react";
+import { parseISO, format, fromUnixTime, getYear, getDay } from "date-fns";
+import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Home.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   collection,
-  addDoc,
   getDocs,
   updateDoc,
   doc,
@@ -24,28 +16,26 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import NavPage from "./NavPage";
+import { daysToWeeks } from "date-fns/esm";
 
 export default function Home() {
+  const navigate = useNavigate();
   const [error, setError] = useState();
   const { currentUser, logout, userId } = useAuth();
-  const [selectedDate, setSelectedDate] = useState(new Date());
-  const navigate = useNavigate();
+  const [selectedDate, setSelectedDate] = useState(new Date()); //for the date picker bse it need object
+  const [datFromDb, setdateFromDb] = useState(""); //to render inside jsx,b/se react doesn't know how to display object. it should be array or strings etc
   const collectionRef = collection(db, "users");
-  const [userTitle, setUserTitle] = useState("");
-  const [userName, setUserName] = useState("");
-  const [mensStart, setMensStart] = useState("");
-  const { clack } = useRef();
-  const [da, setDa] = useState();
-  const docId = "";
-  const [changeTitle, setChangeTitle] = useState();
+  const [sucessMsg, setSuccessMsg] = useState("");
+  const [getMsg, setGetMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
 
-  const handleTitle = function (e) {
-    setUserTitle(e.target.value);
-  };
+  // const handleTitle = function (e) {
+  //   setUserTitle(e.target.value);
+  // };
 
-  const handleName = (e) => {
-    setUserName(e.target.value);
-  };
+  // const handleName = (e) => {
+  //   setUserName(e.target.value);
+  // };
 
   async function handleLogOut() {
     setError("");
@@ -58,108 +48,85 @@ export default function Home() {
     }
   }
 
-  async function deletePro() {
-    const userDoc = doc(db, "users", userId);
-    await deleteDoc(userDoc);
-  }
-
-  async function updatePro() {
-    const userDoc = doc(db, "users", userId);
-    console.log(userId);
-    const newFields = { title: "The title has changed" };
-    await updateDoc(userDoc, newFields);
-    setChangeTitle("The title has changed");
-  }
-
-  async function postNewDoc(e) {
-    e.preventDefault();
+  async function postNewDoc() {
+    // e.preventDefault();
     try {
       const specifyDoc = doc(db, "users", userId);
       const docRef = await setDoc(specifyDoc, {
-        title: userTitle,
-        name: userName,
+        cycleStart: selectedDate,
         userId: userId,
       });
-
-      setUserTitle("");
-      setUserName("");
-
+      setSuccessMsg("You have saved your data successfully!");
       console.log("Document written with ID: ", docRef.id);
-    } catch (e) {
-      console.error("Error adding document: ", e);
+    } catch {
+      setErrorMsg("Error in saving");
     }
   }
-
-  // async function postNewDoc(e) {
-  //   e.preventDefault();
-  //   try {
-  //     const docRef = await addDoc(collectionRef, {
-  //       title: userTitle,
-  //       name: userName,
-  //       userId: userId,
-  //     });
-  //     setUserTitle("");
-  //     setUserName("");
-  //     docId = docRef.id;
-  //     console.log("Document written with ID: ", docRef.id);
-  //   } catch (e) {
-  //     console.error("Error adding document: ", e);
-  //   }
-  // }
-
-  // const getUserFiltered = async () => {
-  //   try {
-  //     const snapshot = await collectionRef.doc(userId).get();
-  //     const data = snapshot.data();
-  //     setDa(data.title);
-  //   } catch {
-  //     console.log("Errorsssss");
-  //   }
-  // };
-
-  const getUserFiltered = async () => {
-    // try {
-    const snapshot = await getDocs(collectionRef);
-    snapshot.forEach((doc) => {
-      if (doc.data().userId === userId) {
-        setMensStart(doc.data().title);
+  useEffect(() => {
+    const fetchData = async () => {
+      const snapshot = await getDocs(collectionRef);
+      const datas = snapshot.docs;
+      console.log(datFromDb);
+      if (datas.length !== 0) {
+        let found = false;
+        datas.forEach((doc) => {
+          // console.log("each thing");
+          // console.log(doc.data());
+          // console.log(doc.data().userId);
+          if (doc.data().userId === userId) {
+            //if the user has userId in the db, then there is cycleStart also
+            const dateVar = doc.data().cycleStart.toJSON();
+            const date = fromUnixTime(dateVar.seconds);
+            // console.log(date);
+            console.log(datFromDb);
+            const dateFormatted = format(date, "MM/dd/yyyy");
+            // console.log(dateFormatted);
+            setGetMsg(`Your cyle start date is ${dateFormatted}`);
+            setdateFromDb(dateFormatted);
+            setSelectedDate(new Date(dateFormatted));
+            found = true;
+          }
+        });
+        if (!found) {
+          setGetMsg("You haven't selected a date, please pick one.");
+        }
+      } else {
+        // console.log("not snapshots");
+        // console.log(dateFromDb);
+        setGetMsg("You haven't selected a date, please pick one.");
       }
-    });
-  };
+    };
+    fetchData();
+  }, [sucessMsg]);
 
-  // const updateCycles = async () => {};
-  // console.log(snapshot.data());
+  async function updateDate() {
+    const userDoc = doc(db, "users", userId);
+    const newFields = { cycleStart: selectedDate };
+    await updateDoc(userDoc, newFields);
 
-  //   snapshot.data.forEach((user) => {
-  //     if (user.userId === userId) {
-  //       setMensStart(user.name);
-  //       // if (user.docId === userId) {
+    setGetMsg(`Your cyle start date is ${format(selectedDate, "MM/dd/yyyy")}`);
+  }
 
-  //       // }
-  //     }
-  //   });
-  // } catch {
-  //   console.log(error);
-  // }
-
-  //   getUserFiltered();
-  // }, []);
+  async function deletePro() {
+    const userDoc = doc(db, "users", userId);
+    await deleteDoc(userDoc);
+    setGetMsg("You have successfully deleted your data.");
+    navigate("/deleteMsg");
+  }
 
   return (
     <div
-    // className="try"
-    // style={{ backgroundColor: "#FFD180" }}
-
-    // style={{
-    //   backgroundImage:
-    //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
-    // }}
+      className="try"
+      // style={{
+      //   backgroundImage:
+      //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
+      // }}
     >
       <div>
         <NavPage />
         <Container>
           <Row>
-            <Col>
+            <Col className="me-4">
               <h3 className="mt-3">Facts</h3>
               <p>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -172,7 +139,14 @@ export default function Home() {
                 velit. Libero enim sed faucibus turpis in. Dolor sit amet
                 consectetur adipiscing elit duis tristique sollicitudin.
                 Tincidunt eget nullam non nisi est sit. Id ornare arcu odio ut
-                sem nulla pharetra diam.
+                sem nulla pharetra diam. uspendisse. Est sit amet facilisis
+                magna etiam tempor orci. Senectus et netus et malesuada fames ac
+                turpis. Morbi quis commodo odio aenean sed. Eu tincidunt tortor
+                aliquam nulla. Blandit volutpat maecenas volutpat blandit
+                aliquam etiam erat velit. Libero enim sed faucibus turpis in.
+                Dolor sit amet consectetur adipiscing elit duis tristique
+                sollicitudin. Tincidunt eget nullam non nisi est sit. Id ornare
+                arcu odio ut sem nulla pharetra diam.
               </p>
               <img
                 src="https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg"
@@ -184,23 +158,15 @@ export default function Home() {
                 style={{ width: 656.936, height: 495, margin: 0 }}
               ></img>
             </Col>
-            {/* <Row> */}
-            {/* <NavPage />
-        </Row> */}
-            <Col>
+            <Col className="ms-4">
               <Row className="text-end">
                 <div>
                   <Col>
-                    {/* <h2 className="text-center mb-4">Profile</h2> */}
                     {error && <Alert variant="danger">{error}</Alert>}
                     <div>
-                      {/* // className="mt-5 d-flex justify-content-left"> */}
                       <strong>Email:</strong>
                       {currentUser.email}
                     </div>
-                    {/* <Link to="update-profile" className="btn btn-primary w-100 mt-3">
-            Update Profile
-          </Link> */}
                   </Col>
                 </div>
               </Row>
@@ -212,79 +178,95 @@ export default function Home() {
                   </Button>
                 </Col>
               </Row>
-              {/* <Row>
-          <Col>
-            <h2>{userId}</h2>
-          </Col>
-        </Row> */}
 
-              <Col className="mb-4">
-                <Form onSubmit={postNewDoc}>
-                  <label>Title</label>
-                  <input
-                    type="text"
-                    value={userTitle}
-                    onChange={handleTitle}
-                  ></input>
-                  <label>Name</label>
-                  <input
-                    type="text"
-                    value={userName}
-                    onChange={handleName}
-                  ></input>
-                  <input type="submit" label="Submit"></input>
-                </Form>
-              </Col>
-              <Row>
-                <Col>
-                  <h3 className="w-100 mb-4">
-                    Click in the box to pick a date
-                  </h3>
-                </Col>
-              </Row>
-              <Row></Row>
+              {getMsg === "You haven't selected a date, please pick one." && (
+                <div>
+                  <Row>
+                    <Col>
+                      <h3 className="w-100 mb-4">{getMsg}</h3>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <div className="mb-4">
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={(da) => setSelectedDate(da)}
+                        // isClearable
+                        showYearDropdown
+                        scrollableYearDropdown
+                      />
+                    </div>
+                  </Row>
 
-              <div className="mb-4">
-                <DatePicker
-                  selected={selectedDate}
-                  onChange={(da) => setSelectedDate(da)}
-                  // isClearable
-                  showYearDropdown
-                  scrollableYearDropdown
-                />
-              </div>
+                  <div className="mb-4">
+                    The date you picked is {format(selectedDate, "MM/dd/yyyy")}.
+                    Click the button to confirm. <br />
+                    <Button
+                      onClick={() => {
+                        postNewDoc();
+                      }}
+                    >
+                      Confirm
+                    </Button>
+                  </div>
+                </div>
+              )}
 
-              <div className="mb-4">
-                {" "}
-                The date you picked is {selectedDate.toDateString()}. Click the
-                button to confirm. <br />
-                <Button>Confirm</Button>
-              </div>
+              {/* {sucessMsg && <Alert>{sucessMsg}</Alert>};
+                {errorMsg && <Alert>{errorMsg}</Alert>};
+               
+              </div>*/}
 
-              <div>
-                <h4>Do you want to see your profile? </h4>
-                <Button onClick={getUserFiltered}>Show profile</Button>
-                {mensStart ? (
-                  <Alert variant="danger">Your Title is {mensStart}</Alert>
-                ) : (
-                  ""
-                )}
-              </div>
-              <Row className="mt-4">
-                <Col>
-                  <Button onClick={updatePro}>Update Profile</Button>
-                  {changeTitle ? (
-                    <Alert variant="danger">Your Title is {changeTitle}</Alert>
-                  ) : (
-                    ""
-                  )}
-                </Col>
-              </Row>
-              <Row className="mt-4">
-                <Col>
-                  <Button onClick={deletePro}>Delete Profile</Button>
-                </Col>
-              </Row>
+              {datFromDb ? ( //if selectedDate is true or not empty, render selectedDate if you want, otherwise render the rest of the code after &&
+                <div>
+                  <Row className="mt-4">
+                    <Col>
+                      <h6>{getMsg}</h6>
+                      <h6 className="mt-3">Change the date?</h6>
+                      <DatePicker
+                        selected={selectedDate}
+                        onChange={(da) => setSelectedDate(da)}
+                        // isClearable
+                        showYearDropdown
+                        scrollableYearDropdown
+                      />
+                      <Button className="mt-2" onClick={updateDate}>
+                        Update
+                      </Button>
+                      {!datFromDb && (
+                        <Alert variant="danger">
+                          Your new date is {datFromDb}
+                        </Alert>
+                      )}
+                    </Col>
+                  </Row>
+                  <Row className="mt-4">
+                    <Col>
+                      <h6>Delete your date?</h6>
+                      <Button onClick={deletePro}>Delete</Button>
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col>
+                      <p>
+                        During the menstrual cycle, a series of hormone changes
+                        prepare a woman's body for pregnancy. The ovaries make
+                        hormones, which include estrogen and progesterone.
+                        During the cycle, these hormone levels change.{" "}
+                      </p>
+                      <p>
+                        Several studies shows that planning key events during
+                        the days and weeks a woman is more effective makes a
+                        difference. Most women can think clearly, talk
+                        influencially and achieve high results during those high
+                        progrestrone periods. We can help you choose
+                      </p>
+                    </Col>
+                  </Row>
+                </div>
+              ) : (
+                ""
+              )}
             </Col>
           </Row>
         </Container>
