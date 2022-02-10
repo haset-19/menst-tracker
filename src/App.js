@@ -1,6 +1,7 @@
 import "./App.css";
 import Signup from "./components/Signup";
 import { Container } from "react-bootstrap";
+import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./components/Home";
 import Login from "./components/Login";
@@ -13,18 +14,23 @@ import DeleteMsg from "./components/DeleteMsg";
 
 //switch is to determine which page we are on, and route to determine which page we are going to
 function App() {
+  const [datFromDb, setdateFromDb] = useState(" ");
+
   return (
     <>
-      {/* // className="d-flex align-items-center justify-content-center" // style= */}
-      {/* {{ minHeight: "100vh" }} */}
-
       <div>
         <Router>
           <AuthProvider>
             <Routes>
               <Route exact path="/signup" element={<Signup />} />
               <Route exact path="/" element={<PrivateRoute />}>
-                <Route exact path="/" element={<Home />} />
+                <Route
+                  exact
+                  path="/"
+                  element={
+                    <Home setdateFromDb={setdateFromDb} datFromDb={datFromDb} />
+                  }
+                />
               </Route>
               <Route exact path="/login" element={<Login />} />
               <Route
@@ -32,7 +38,11 @@ function App() {
                 path="/forgot-password"
                 element={<ForgotPassword />}
               />
-              <Route exact path="/plan" element={<Plan />} />
+              <Route
+                exact
+                path="/plan"
+                element={<Plan datFromDb={datFromDb} />}
+              />
               <Route exact path="/deleteMsg" element={<DeleteMsg />} />
             </Routes>
           </AuthProvider>

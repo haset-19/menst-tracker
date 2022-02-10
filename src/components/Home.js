@@ -1,8 +1,9 @@
 import { React, useState, useEffect } from "react";
 import { parseISO, format, fromUnixTime, getYear, getDay } from "date-fns";
-import { Form, Button, Alert, Container, Row, Col } from "react-bootstrap";
+import { Button, Alert, Container, Row, Col } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
+import Plan from "./Plan";
 import "./Home.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -18,24 +19,16 @@ import { db } from "../firebase";
 import NavPage from "./NavPage";
 import { daysToWeeks } from "date-fns/esm";
 
-export default function Home() {
+export default function Home(props) {
   const navigate = useNavigate();
   const [error, setError] = useState();
   const { currentUser, logout, userId } = useAuth();
   const [selectedDate, setSelectedDate] = useState(new Date()); //for the date picker bse it need object
-  const [datFromDb, setdateFromDb] = useState(""); //to render inside jsx,b/se react doesn't know how to display object. it should be array or strings etc
+  //to render inside jsx,b/se react doesn't know how to display object. it should be array or strings etc
   const collectionRef = collection(db, "users");
   const [sucessMsg, setSuccessMsg] = useState("");
   const [getMsg, setGetMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
-
-  // const handleTitle = function (e) {
-  //   setUserTitle(e.target.value);
-  // };
-
-  // const handleName = (e) => {
-  //   setUserName(e.target.value);
-  // };
 
   async function handleLogOut() {
     setError("");
@@ -48,8 +41,8 @@ export default function Home() {
     }
   }
 
-  async function postNewDoc() {
-    // e.preventDefault();
+  async function postNewDoc(e) {
+    e.preventDefault();
     try {
       const specifyDoc = doc(db, "users", userId);
       const docRef = await setDoc(specifyDoc, {
@@ -63,26 +56,31 @@ export default function Home() {
     }
   }
   useEffect(() => {
+    console.log(currentUser);
     const fetchData = async () => {
+      console.log("hjhhhhh");
       const snapshot = await getDocs(collectionRef);
       const datas = snapshot.docs;
-      console.log(datFromDb);
+      console.log("ahunimakkk ");
+      // console.log(datFromDb);
+      console.log(datas);
+      console.log(currentUser.uid);
       if (datas.length !== 0) {
         let found = false;
         datas.forEach((doc) => {
           // console.log("each thing");
           // console.log(doc.data());
-          // console.log(doc.data().userId);
-          if (doc.data().userId === userId) {
+          console.log(doc.data().userId);
+          if (doc.data().userId === currentUser.uid) {
             //if the user has userId in the db, then there is cycleStart also
             const dateVar = doc.data().cycleStart.toJSON();
             const date = fromUnixTime(dateVar.seconds);
             // console.log(date);
-            console.log(datFromDb);
+            // console.log(datFromDb);
             const dateFormatted = format(date, "MM/dd/yyyy");
             // console.log(dateFormatted);
             setGetMsg(`Your cyle start date is ${dateFormatted}`);
-            setdateFromDb(dateFormatted);
+            props.setdateFromDb(dateFormatted);
             setSelectedDate(new Date(dateFormatted));
             found = true;
           }
@@ -91,7 +89,7 @@ export default function Home() {
           setGetMsg("You haven't selected a date, please pick one.");
         }
       } else {
-        // console.log("not snapshots");
+        console.log("not kksnapshots");
         // console.log(dateFromDb);
         setGetMsg("You haven't selected a date, please pick one.");
       }
@@ -113,6 +111,10 @@ export default function Home() {
     setGetMsg("You have successfully deleted your data.");
     navigate("/deleteMsg");
   }
+
+  const handlePlan = function () {
+    navigate("/plan");
+  };
 
   return (
     <div
@@ -202,8 +204,8 @@ export default function Home() {
                     The date you picked is {format(selectedDate, "MM/dd/yyyy")}.
                     Click the button to confirm. <br />
                     <Button
-                      onClick={() => {
-                        postNewDoc();
+                      onClick={(e) => {
+                        postNewDoc(e);
                       }}
                     >
                       Confirm
@@ -212,12 +214,7 @@ export default function Home() {
                 </div>
               )}
 
-              {/* {sucessMsg && <Alert>{sucessMsg}</Alert>};
-                {errorMsg && <Alert>{errorMsg}</Alert>};
-               
-              </div>*/}
-
-              {datFromDb ? ( //if selectedDate is true or not empty, render selectedDate if you want, otherwise render the rest of the code after &&
+              {props.datFromDb ? ( //if selectedDate is true or not empty, render selectedDate if you want, otherwise render the rest of the code after &&
                 <div>
                   <Row className="mt-4">
                     <Col>
@@ -233,9 +230,9 @@ export default function Home() {
                       <Button className="mt-2" onClick={updateDate}>
                         Update
                       </Button>
-                      {!datFromDb && (
+                      {props.datFromDb && (
                         <Alert variant="danger">
-                          Your new date is {datFromDb}
+                          Your new date is {props.datFromDb}
                         </Alert>
                       )}
                     </Col>
@@ -259,8 +256,22 @@ export default function Home() {
                         the days and weeks a woman is more effective makes a
                         difference. Most women can think clearly, talk
                         influencially and achieve high results during those high
-                        progrestrone periods. We can help you choose
+                        progrestrone periods.
                       </p>
+                      <p>
+                        We can help you choose which activities are recommended
+                        week by week basis. Then in the return you can make
+                        informed decision.
+                      </p>
+                      <Button
+                        onClick={() => {
+                          //
+                          console.log("working");
+                          handlePlan();
+                        }}
+                      >
+                        Plan your events
+                      </Button>
                     </Col>
                   </Row>
                 </div>

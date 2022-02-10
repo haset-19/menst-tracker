@@ -10,6 +10,7 @@ export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState();
   const [loading, setLoading] = useState(true);
   const [userId, setUserId] = useState();
+  const [userError, setUserError] = useState();
 
   function login(email, password) {
     return auth.signInWithEmailAndPassword(email, password);
@@ -29,11 +30,16 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       //this is getting the current user from db using its method
-      setCurrentUser(user);
-      setLoading(false);
-      setUserId(user.uid);
+      if (user) {
+        setCurrentUser(user);
+        setLoading(false);
+        setUserId(user.uid);
+      } else {
+        setUserError("user not logged");
+      }
     });
-    return unsubscribe;
+    // return unsubscribe;
+    return () => unsubscribe;
   }, []);
 
   const value = {
@@ -43,6 +49,8 @@ export function AuthProvider({ children }) {
     logout,
     resetPassword,
     userId,
+    userError,
+
     //this is exposing all of these functions to other components
   };
 

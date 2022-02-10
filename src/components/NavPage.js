@@ -2,6 +2,7 @@ import React from "react";
 import { Nav, Navbar, Container, Row, Col } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./NavPage.css";
+import "./Logo.png";
 export default function NavPage() {
   return (
     <>
@@ -12,7 +13,7 @@ export default function NavPage() {
               <Col>
                 <Navbar.Brand>
                   {" "}
-                  <img src="IMAGE" alt="LOGO" />
+                  <img src="./Logo.png" alt="logo" />
                 </Navbar.Brand>
               </Col>
               <Col>
