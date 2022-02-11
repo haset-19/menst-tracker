@@ -5,6 +5,7 @@ import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Plan from "./Plan";
 import "./Home.css";
+import Image from "react-bootstrap/Image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -127,52 +128,43 @@ export default function Home(props) {
       <div>
         <NavPage />
         <Container>
+          <Row className="text-end">
+            <div>
+              <Col>
+                {error && <Alert variant="danger">{error}</Alert>}
+                <div>
+                  <strong>Email:</strong>
+                  {currentUser.email}
+                </div>
+              </Col>
+            </div>
+          </Row>
           <Row>
             <Col className="me-4">
               <h3 className="mt-3">Facts</h3>
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Aliquam nulla facilisi cras fermentum. Et egestas quis ipsum
-                suspendisse. Est sit amet facilisis magna etiam tempor orci.
-                Senectus et netus et malesuada fames ac turpis. Morbi quis
-                commodo odio aenean sed. Eu tincidunt tortor aliquam nulla.
-                Blandit volutpat maecenas volutpat blandit aliquam etiam erat
-                velit. Libero enim sed faucibus turpis in. Dolor sit amet
-                consectetur adipiscing elit duis tristique sollicitudin.
-                Tincidunt eget nullam non nisi est sit. Id ornare arcu odio ut
-                sem nulla pharetra diam. uspendisse. Est sit amet facilisis
-                magna etiam tempor orci. Senectus et netus et malesuada fames ac
-                turpis. Morbi quis commodo odio aenean sed. Eu tincidunt tortor
-                aliquam nulla. Blandit volutpat maecenas volutpat blandit
-                aliquam etiam erat velit. Libero enim sed faucibus turpis in.
-                Dolor sit amet consectetur adipiscing elit duis tristique
-                sollicitudin. Tincidunt eget nullam non nisi est sit. Id ornare
-                arcu odio ut sem nulla pharetra diam.
+                Several studies have investigated the relationship between
+                behavioral changes and the menstrual cycle in female at a
+                reproductive age.The brain and ovaries are constantly
+                interacting to create hormone level changes over the course of
+                each menstrual cycle. Different hormones dominate in different
+                cycle phases and they influence mental and physical fitness.
+                Understanding how hormone levels change during the menstrual
+                cycle can help to better anticipate symptoms, adjust routines
+                and optimize life.
               </p>
+
               <img
                 src="https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg"
                 alt="Getty Images"
                 jsaction="load:XAeZkd;"
                 jsname="HiaYvf"
-                className="n3VNCb"
+                className="n3VNCb rounded-circle"
                 data-noaft="1"
                 style={{ width: 656.936, height: 495, margin: 0 }}
               ></img>
             </Col>
             <Col className="ms-4">
-              <Row className="text-end">
-                <div>
-                  <Col>
-                    {error && <Alert variant="danger">{error}</Alert>}
-                    <div>
-                      <strong>Email:</strong>
-                      {currentUser.email}
-                    </div>
-                  </Col>
-                </div>
-              </Row>
-
               <Row className="text-end">
                 <Col>
                   <Button variant="link" onClick={handleLogOut}>
@@ -180,7 +172,10 @@ export default function Home(props) {
                   </Button>
                 </Col>
               </Row>
-
+              <p>
+                To get customized information, please make sure you choose your
+                latest menstrual starting date.
+              </p>
               {getMsg === "You haven't selected a date, please pick one." && (
                 <div>
                   <Row>
@@ -240,28 +235,28 @@ export default function Home(props) {
                   <Row className="mt-4">
                     <Col>
                       <h6>Delete your date?</h6>
-                      <Button onClick={deletePro}>Delete</Button>
+                      <Button className="mb-4" onClick={deletePro}>
+                        Delete
+                      </Button>
                     </Col>
                   </Row>
                   <Row>
                     <Col>
                       <p>
-                        During the menstrual cycle, a series of hormone changes
-                        prepare a woman's body for pregnancy. The ovaries make
-                        hormones, which include estrogen and progesterone.
-                        During the cycle, these hormone levels change.{" "}
+                        Each week, hormone levels including estrogen and
+                        progesterone changes.{" "}
                       </p>
                       <p>
-                        Several studies shows that planning key events during
-                        the days and weeks a woman is more effective makes a
-                        difference. Most women can think clearly, talk
-                        influencially and achieve high results during those high
-                        progrestrone periods.
+                        Planning key events during the days and weeks a woman
+                        possibly be more effective makes a difference. Most
+                        women can think clearly, talk influencially and achieve
+                        high results during a certain time of a month.
                       </p>
                       <p>
-                        We can help you choose which activities are recommended
-                        week by week basis. Then in the return you can make
-                        informed decision.
+                        We can help you choose dates from a calendar, show
+                        expected symptoms and recommended activities week by
+                        week basis. You can benefit from making an informed
+                        decision.
                       </p>
                       <Button
                         onClick={() => {
