@@ -20,7 +20,7 @@ export default function Plan({ datFromDb }) {
   const [symp, setSymptoms] = useState();
   const [recommendations, setRecommendations] = useState();
   const [loading, setLoading] = useState(true);
-  const [first, setFirst] = useState(false);
+  const [fir, setFirst] = useState(false);
   const [second, setSecond] = useState(false);
   const [third, setThird] = useState(false);
   const [fourth, setFourth] = useState(false);
@@ -54,20 +54,36 @@ export default function Plan({ datFromDb }) {
 
     if (datePicked >= dbDate && datePicked < sevenAdded) {
       console.log("the first week");
+
       helperFun("firstWeek");
       setFirst(true);
+      setSecond(false);
+      setSecond(false);
+      setSecond(false);
     } else if (datePicked >= sevenAdded && datePicked < fourteenAdded) {
       console.log("second week");
+
       helperFun("secondWeek");
       setSecond(true);
+      setFirst(false);
+      setThird(false);
+      setFourth(false);
     } else if (datePicked >= fourteenAdded && datePicked < twentyoneAdded) {
       console.log("third week");
+
       helperFun("thirdWeek");
       setThird(true);
+      setFirst(false);
+      setSecond(false);
+      setFourth(false);
     } else if (datePicked >= twentyoneAdded && datePicked <= twentyeightAdded) {
       console.log("fourth week");
+
       helperFun("fourthWeek");
       setFourth(true);
+      setFirst(false);
+      setSecond(false);
+      setThird(false);
     }
   };
 
@@ -108,7 +124,7 @@ export default function Plan({ datFromDb }) {
       <NavPage />
       <Container>
         <Row>
-          <Col>
+          <Col sm={4}>
             <div className="text-start m-4">
               <p>
                 Calendar notes can really make a difference, so consider
@@ -118,10 +134,10 @@ export default function Plan({ datFromDb }) {
               </p>
 
               <p>
-                You can pick a date from the month and understand the symptoms
-                you might be expecting based on your menstrual start date; and
-                also explore recommended activities. Take the most out of the
-                days.{" "}
+                You can pick a date from the calendar below and understand the
+                symptoms you might be expecting based on your menstrual start
+                date; and also explore recommended activities. Take the most out
+                of the days.{" "}
               </p>
             </div>
 
@@ -138,14 +154,27 @@ export default function Plan({ datFromDb }) {
                   />
                 </div>
               </Row>
-              <Button
-                onClick={() => {
-                  handlePlans();
-                  // handleSymptoms();
-                }}
-              >
-                Let's do it!
-              </Button>
+              <Row>
+                <Col>
+                  <Button
+                    sm={9}
+                    onClick={() => {
+                      handlePlans();
+                      // handleSymptoms();
+                    }}
+                  >
+                    Let's do it!
+                  </Button>
+                </Col>
+              </Row>
+              <Row>
+                <img
+                  className="mt-4"
+                  style={{ width: 400, height: 300 }}
+                  src="https://z9d7q8h2.stackpathcdn.com/wp-content/uploads/2019/09/10-ancients-cities-Southeast-Asia-Chiang-Mai.jpg"
+                  alt="bg"
+                ></img>
+              </Row>
               {/* {!loading && (
           <ul>
             {console.log(!loading)}
@@ -161,18 +190,34 @@ export default function Plan({ datFromDb }) {
             <Row>
               <Col>{handleSymptoms()}</Col>
               <Col>
-                {first && (
+                {fir && (
                   <img
-                    style={{ height: 500, width: 300 }}
+                    className="mt-4"
+                    style={{ height: 500, width: 400 }}
                     src="/images/startweek.png"
                     alt="1week"
                   ></img>
                 )}
-                {second && <img src="/images/effective.png" alt="2week"></img>}
-                {third && <img src="/images/2week.png" alt="3week"></img>}
+                {second && (
+                  <img
+                    className="mt-4"
+                    style={{ height: 500, width: 400 }}
+                    src="/images/effective.png"
+                    alt="2week"
+                  ></img>
+                )}
+                {third && (
+                  <img
+                    className="mt-4"
+                    style={{ height: 500, width: 400 }}
+                    src="/images/roseBg.png"
+                    alt="3week"
+                  ></img>
+                )}
                 {fourth && (
                   <img
-                    style={{ height: 600, width: 400 }}
+                    className="mt-4"
+                    style={{ height: 500, width: 400 }}
                     src="/images/4relax.png"
                     alt="4week"
                   ></img>
@@ -182,7 +227,14 @@ export default function Plan({ datFromDb }) {
             <Row>
               <Col>{handleRecommendations()}</Col>
               <Col>
-                {second && <img src="/images/2week.png" alt="2week"></img>}
+                {second && (
+                  <img
+                    className="mt-4"
+                    style={{ height: 500, width: 400 }}
+                    src="/images/2week.png"
+                    alt="2week"
+                  ></img>
+                )}
               </Col>
             </Row>
           </Col>

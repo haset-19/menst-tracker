@@ -23,15 +23,19 @@ export default function NavPage() {
                 />
               </Navbar.Brand>
             </Col>
-            <Col className="mt-4" sm={3}>
-              <Nav.Link style={{ color: "#cddbgd" }} href="/">
-                Home
-              </Nav.Link>
-            </Col>
-            <Col className="mt-4" sm={3}>
-              <Nav.Link style={{ color: "#cddbgd" }} href="/plan">
-                Plan
-              </Nav.Link>
+            <Col>
+              <Navbar bg="info">
+                <Col className="mt-4" sm={3}>
+                  <Nav.Link style={{ color: "cddbgd" }} href="/">
+                    Home
+                  </Nav.Link>
+                </Col>
+                <Col className="mt-4" sm={3}>
+                  <Nav.Link style={{ color: "#cddbgd" }} href="/plan">
+                    Plan
+                  </Nav.Link>
+                </Col>
+              </Navbar>
             </Col>
           </Row>
         </Container>
