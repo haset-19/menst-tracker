@@ -80,7 +80,7 @@ export default function Home(props) {
             // console.log(datFromDb);
             const dateFormatted = format(date, "MM/dd/yyyy");
             // console.log(dateFormatted);
-            setGetMsg(`Your picked ${dateFormatted}.`);
+            setGetMsg(`Your cyle start date is ${dateFormatted}`);
             props.setdateFromDb(dateFormatted);
             setSelectedDate(new Date(dateFormatted));
             found = true;
@@ -119,8 +119,7 @@ export default function Home(props) {
 
   return (
     <div
-      className="mt-4"
-
+      className="try"
       // style={{
       //   backgroundImage:
       //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
@@ -141,13 +140,8 @@ export default function Home(props) {
             </div>
           </Row>
           <Row>
-            <Col className="me-4" sm={5}>
-              <img
-                style={{ width: 200, height: 150 }}
-                src="/images/hello.png"
-                alt="hello"
-              ></img>
-              {/* <h3 className="mt-3">Facts</h3> */}
+            <Col className="me-4">
+              <h3 className="mt-3">Facts</h3>
               <p>
                 Several studies have investigated the relationship between
                 behavioral changes and the menstrual cycle in female at a
@@ -165,25 +159,15 @@ export default function Home(props) {
                 alt="Getty Images"
                 jsaction="load:XAeZkd;"
                 jsname="HiaYvf"
-                className="n3VNCb w-100 rounded-circle"
+                className="n3VNCb rounded-circle"
                 data-noaft="1"
-                // style={{ width: 500, height: 400, margin: 0 }}
-              ></img>
-              <img
-                className=" mt-4 "
-                src="/images/greenBg.png"
-                alt="green"
-                style={{ width: 600, height: 400, margin: 0 }}
+                style={{ width: 656.936, height: 495, margin: 0 }}
               ></img>
             </Col>
             <Col className="ms-4">
               <Row className="text-end">
                 <Col>
-                  <Button
-                    className="mb-4"
-                    variant="link"
-                    onClick={handleLogOut}
-                  >
+                  <Button variant="link" onClick={handleLogOut}>
                     Log Out
                   </Button>
                 </Col>
@@ -258,18 +242,11 @@ export default function Home(props) {
                   </Row>
                   <Row>
                     <Col>
-                      <img
-                        className="w-100 ms-4"
-                        style={{ width: 200, height: 400 }}
-                        src="/images/calendarBg.png"
-                        alt="cal"
-                      ></img>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col sm={4}></Col>
-                    <Col sm={8}>
-                      <p className="mt-4">
+                      <p>
+                        Each week, hormone levels including estrogen and
+                        progesterone changes.{" "}
+                      </p>
+                      <p>
                         Planning key events during the days and weeks a woman
                         possibly be more effective makes a difference. Most
                         women can think clearly, talk influencially and achieve
