@@ -119,11 +119,11 @@ export default function Home(props) {
 
   return (
     <div
-      className="try"
-      // style={{
-      //   backgroundImage:
-      //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
-      // }}
+    // className="try"
+    // style={{
+    //   backgroundImage:
+    //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
+    // }}
     >
       <div>
         <NavPage />
@@ -141,7 +141,11 @@ export default function Home(props) {
           </Row>
           <Row>
             <Col className="me-4">
-              <h3 className="mt-3">Facts</h3>
+              <img
+                style={{ height: 100, width: 150 }}
+                src="/images/hello.png"
+                alt="hello"
+              ></img>
               <p>
                 Several studies have investigated the relationship between
                 behavioral changes and the menstrual cycle in female at a

@@ -56,18 +56,31 @@ export default function Plan({ datFromDb }) {
       console.log("the first week");
       helperFun("firstWeek");
       setFirst(true);
+      setSecond(false);
+      setThird(false);
+      setFourth(false);
     } else if (datePicked >= sevenAdded && datePicked < fourteenAdded) {
       console.log("second week");
       helperFun("secondWeek");
       setSecond(true);
+      setFirst(false);
+      setThird(false);
+      setFourth(false);
     } else if (datePicked >= fourteenAdded && datePicked < twentyoneAdded) {
       console.log("third week");
       helperFun("thirdWeek");
       setThird(true);
+      setFirst(false);
+      setSecond(false);
+
+      setFourth(false);
     } else if (datePicked >= twentyoneAdded && datePicked <= twentyeightAdded) {
       console.log("fourth week");
       helperFun("fourthWeek");
       setFourth(true);
+      setFirst(false);
+      setSecond(false);
+      setThird(false);
     }
   };
 
@@ -168,7 +181,14 @@ export default function Plan({ datFromDb }) {
                     alt="1week"
                   ></img>
                 )}
-                {second && <img src="/images/effective.png" alt="2week"></img>}
+                {second && (
+                  <img
+                    className="mt-4"
+                    style={{ height: 500, width: 300 }}
+                    src="/images/effective.png"
+                    alt="2week"
+                  ></img>
+                )}
                 {third && <img src="/images/2week.png" alt="3week"></img>}
                 {fourth && (
                   <img
@@ -182,7 +202,13 @@ export default function Plan({ datFromDb }) {
             <Row>
               <Col>{handleRecommendations()}</Col>
               <Col>
-                {second && <img src="/images/2week.png" alt="2week"></img>}
+                {second && (
+                  <img
+                    style={{ height: 500, width: 300 }}
+                    src="/images/2week.png"
+                    alt="2week"
+                  ></img>
+                )}
               </Col>
             </Row>
           </Col>
