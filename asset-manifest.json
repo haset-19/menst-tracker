@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/menst-tracker/static/css/main.daf781ab.css",
+    "main.js": "/menst-tracker/static/js/main.ccae0ce6.js",
+    "static/js/787.200d7de4.chunk.js": "/menst-tracker/static/js/787.200d7de4.chunk.js",
+    "index.html": "/menst-tracker/index.html",
+    "main.daf781ab.css.map": "/menst-tracker/static/css/main.daf781ab.css.map",
+    "main.ccae0ce6.js.map": "/menst-tracker/static/js/main.ccae0ce6.js.map",
+    "787.200d7de4.chunk.js.map": "/menst-tracker/static/js/787.200d7de4.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.daf781ab.css",
+    "static/js/main.ccae0ce6.js"
+  ]
+}
