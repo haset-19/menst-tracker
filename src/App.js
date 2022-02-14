@@ -5,7 +5,7 @@ import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { HashRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import Plan from "./components/Plan";

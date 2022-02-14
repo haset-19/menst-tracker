@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "menst-tracker",
+    "dbing": "menst-user"
+  },
+  "targets": {}
+}
