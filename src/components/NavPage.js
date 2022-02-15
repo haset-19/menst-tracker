@@ -23,6 +23,7 @@ export default function NavPage() {
                 />
               </Navbar.Brand>
             </Col>
+            {/* <Navbar> */}
             <Col className="mt-4" sm={3}>
               <Nav.Link style={{ color: "#cddbgd" }} href="/">
                 Home
@@ -33,6 +34,7 @@ export default function NavPage() {
                 Plan
               </Nav.Link>
             </Col>
+            {/* </Navbar> */}
           </Row>
         </Container>
 

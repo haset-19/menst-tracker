@@ -14,7 +14,7 @@ import DeleteMsg from "./components/DeleteMsg";
 
 //switch is to determine which page we are on, and route to determine which page we are going to
 function App() {
-  const [datFromDb, setdateFromDb] = useState(" ");
+  const [datFromDb, setdateFromDb] = useState("");
 
   return (
     <>
@@ -26,7 +26,7 @@ function App() {
               <Route exact path="/" element={<PrivateRoute />}>
                 <Route
                   exact
-                  path="/"
+                  path=""
                   element={
                     <Home setdateFromDb={setdateFromDb} datFromDb={datFromDb} />
                   }

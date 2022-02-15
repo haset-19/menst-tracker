@@ -30,13 +30,13 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       //this is getting the current user from db using its method
-      if (user) {
-        setCurrentUser(user);
-        setLoading(false);
-        setUserId(user.uid);
-      } else {
-        setUserError("user not logged");
-      }
+      // if (user) {
+      setCurrentUser(user);
+      setLoading(false);
+      setUserId(user.uid);
+      // } else {
+      //   setUserError("user not logged");
+      // }
     });
     // return unsubscribe;
     return () => unsubscribe;
