@@ -1,19 +1,9 @@
 import { React, useState, useEffect } from "react";
-import { parseISO, format, fromUnixTime, getYear, getDay } from "date-fns";
-import {
-  Button,
-  Alert,
-  Container,
-  Row,
-  Col,
-  Navbar,
-  Nav,
-} from "react-bootstrap";
+import { format, fromUnixTime } from "date-fns";
+import { Button, Alert, Container, Row, Col, Navbar } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
-import Plan from "./Plan";
 import "./Home.css";
-import Image from "react-bootstrap/Image";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import {
@@ -26,7 +16,6 @@ import {
 } from "firebase/firestore";
 import { db } from "../firebase";
 import NavPage from "./NavPage";
-import { daysToWeeks } from "date-fns/esm";
 
 export default function Home(props) {
   const navigate = useNavigate();
@@ -38,6 +27,7 @@ export default function Home(props) {
   const [sucessMsg, setSuccessMsg] = useState("");
   const [getMsg, setGetMsg] = useState("");
   const [errorMsg, setErrorMsg] = useState("");
+  const [updateMsg, setUpdateMsg] = useState("");
 
   async function handleLogOut() {
     setError("");
@@ -67,27 +57,16 @@ export default function Home(props) {
   useEffect(() => {
     console.log(currentUser);
     const fetchData = async () => {
-      console.log("hjhhhhh");
       const snapshot = await getDocs(collectionRef);
       const datas = snapshot.docs;
-      console.log("ahunimakkk ");
-      // console.log(datFromDb);
-      console.log(datas);
-      console.log(currentUser.uid);
       if (datas.length !== 0) {
         let found = false;
         datas.forEach((doc) => {
-          // console.log("each thing");
-          // console.log(doc.data());
-          console.log(doc.data().userId);
           if (doc.data().userId === currentUser.uid) {
             //if the user has userId in the db, then there is cycleStart also
             const dateVar = doc.data().cycleStart.toJSON();
             const date = fromUnixTime(dateVar.seconds);
-            // console.log(date);
-            // console.log(datFromDb);
             const dateFormatted = format(date, "MM/dd/yyyy");
-            // console.log(dateFormatted);
             setGetMsg(`Your cyle start date is ${dateFormatted}`);
             props.setdateFromDb(dateFormatted);
             setSelectedDate(new Date(dateFormatted));
@@ -98,8 +77,6 @@ export default function Home(props) {
           setGetMsg("You haven't selected a date, please pick one.");
         }
       } else {
-        console.log("not kksnapshots");
-        // console.log(dateFromDb);
         setGetMsg("You haven't selected a date, please pick one.");
       }
     };
@@ -110,8 +87,9 @@ export default function Home(props) {
     const userDoc = doc(db, "users", userId);
     const newFields = { cycleStart: selectedDate };
     await updateDoc(userDoc, newFields);
-
-    setGetMsg(`Your cyle start date is ${format(selectedDate, "MM/dd/yyyy")}`);
+    setUpdateMsg(
+      `Your cyle start date is ${format(selectedDate, "MM/dd/yyyy")}`
+    );
   }
 
   async function deletePro() {
@@ -131,7 +109,6 @@ export default function Home(props) {
         backgroundImage: `url("https://i.pinimg.com/474x/54/c7/66/54c766dd1eb670c4eb97ba462192e807--super-short-hairstyles-black-women-short-hairstyles.jpg")`,
         backgroundRepeat: "no-repeat",
         // background: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
-        // linearGradient: "(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
         filter: "brightness(100%)",
         minwidth: 100,
         minHeight: 100,
@@ -139,7 +116,6 @@ export default function Home(props) {
         backgroundColor: "#aaaaaa",
       }}
     >
-      {/* className="try" */}
       <div>
         <container>
           <Row style={{ backgroundColor: "#E1BEE7" }} className="text-end">
@@ -155,65 +131,14 @@ export default function Home(props) {
             </Col>
           </Row>
         </container>
-        {/* <Navbar bg="primary" expand="lg">
-          <Container>
-            <Navbar.Brand>
-              <img
-                className="img-fluid"
-                style={{ height: 200, width: 300 }}
-                src="/logo.png"
-                alt="logo"
-              />
-            </Navbar.Brand>
-            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-            <Navbar.Collapse id="basic-navbar-nav">
-              <Nav className="me-auto">
-                <Nav.Link href="/">Home</Nav.Link>
-                <Nav.Link href="/plan">Plan</Nav.Link>
-              </Nav>
-            </Navbar.Collapse>
-            <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                Signed in as: <a href="#login">{currentUser.email}</a>
-              </Navbar.Text>
-            </Navbar.Collapse>
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Link onClick={handleLogOut}>Log Out</Navbar.Link>
-            </Navbar.Collapse> 
-          </Container>
-        </Navbar> */}
 
         <Navbar expand="lg" bg="primary">
           <Container>
             <NavPage />
-            {/* <Navbar.Toggle />
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                Signed in as: <a href="#login">{currentUser.email}</a>
-              </Navbar.Text>
-            </Navbar.Collapse>
-
-            <Navbar.Collapse className="justify-content-end">
-              <Button variant="link" onClick={handleLogOut}>
-                Log Out
-              </Button>
-            </Navbar.Collapse>  */}
           </Container>
         </Navbar>
 
         <Container>
-          {/* <Row className="text-end">
-            <div>
-              <Col>
-                {error && <Alert variant="danger">{error}</Alert>}
-                <div>
-                  <strong>Email:</strong>
-                  {currentUser.email}
-                </div>
-              </Col>
-            </div>
-          </Row>  */}
           <Row>
             <Col className="me-4">
               <p
@@ -223,16 +148,6 @@ export default function Home(props) {
                   font: "Georgia",
                 }}
               ></p>
-              {/* 
-              <img
-                src="https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg"
-                alt="Getty Images"
-                jsaction="load:XAeZkd;"
-                jsname="HiaYvf"
-                className="n3VNCb rounded-circle"
-                data-noaft="1"
-                style={{ width: 656.936, height: 495, margin: 0 }}
-              ></img> */}
             </Col>
             <Col
               className="ms-4"
@@ -241,18 +156,10 @@ export default function Home(props) {
                   "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
               }}
             >
-              {/* <Row className="text-end">
-                <Col>
-                  <Button variant="link" onClick={handleLogOut}>
-                    Log Out
-                  </Button>
-                </Col>
-              </Row> */}
-
               <h3 className="mt-4 text-white">Facts</h3>
               <p
                 className="text-dark p-3"
-                style={{ fontSize: "1.2em", background: "#E1BEE7" }}
+                style={{ fontSize: "1.2em", background: "#fce4ec" }}
               >
                 Several studies have investigated the relationship between
                 behavioral changes and the menstrual cycle in female at a
@@ -314,9 +221,14 @@ export default function Home(props) {
                 <div>
                   <Row className="mt-4">
                     <Col>
-                      <h6 className="p-3" style={{ background: "#fce4ec" }}>
-                        {getMsg}
-                      </h6>
+                      {getMsg !==
+                        "You haven't selected a date, please pick one." && (
+                        <h6 className="p-3" style={{ background: "#fce4ec" }}>
+                          {" "}
+                          {getMsg}
+                        </h6>
+                      )}
+
                       <h6 className="mt-3" style={{ color: "white" }}>
                         <blockquote>Change the date?</blockquote>
                       </h6>
@@ -330,10 +242,10 @@ export default function Home(props) {
                       <Button className="mt-2" onClick={updateDate}>
                         Update
                       </Button>
-                      {props.datFromDb && (
-                        <Alert variant="danger">
-                          Your new date is {props.datFromDb}
-                        </Alert>
+                      {updateMsg && (
+                        <h6 className="p-3" style={{ background: "#fce4ec" }}>
+                          {updateMsg}
+                        </h6>
                       )}
                     </Col>
                   </Row>
