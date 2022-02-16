@@ -7,12 +7,12 @@ export default function NavPage() {
   return (
     <>
       <div>
-        <Navbar bg="primary">
+        <Navbar style={{ backgroundColor: "#8b008b" }}>
           <Container>
             <Navbar.Brand>
               <img
                 className="img-fluid "
-                style={{ height: 150, width: 200 }}
+                style={{ height: 150, width: 250 }}
                 src="/logo.png"
                 alt="logo"
               />

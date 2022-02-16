@@ -120,12 +120,12 @@ export default function Home(props) {
     >
       <div>
         <container>
-          <Row style={{ backgroundColor: "#E1BEE7" }} className="text-end">
+          <Row style={{ backgroundColor: "#ffd700" }} className="text-end">
             <Col>
               Signed in as: <a href="#log">{currentUser.email}</a>
             </Col>
           </Row>
-          <Row style={{ backgroundColor: "#E1BEE7" }} className="text-end">
+          <Row style={{ backgroundColor: "#ffd700" }} className="text-end">
             <Col>
               <Button variant="link" onClick={handleLogOut}>
                 Log Out
@@ -134,7 +134,7 @@ export default function Home(props) {
           </Row>
         </container>
 
-        <Navbar expand="lg" bg="primary">
+        <Navbar expand="lg" style={{ backgroundColor: "#8b008b" }}>
           <Container>
             <NavPage />
           </Container>
@@ -161,7 +161,7 @@ export default function Home(props) {
               <h3 className="mt-4 text-white">Facts</h3>
               <p
                 className="text-dark p-3"
-                style={{ fontSize: "1.2em", background: "#fce4ec" }}
+                style={{ fontSize: "1.2em", background: "#ffd700" }}
               >
                 Several studies have investigated the relationship between
                 behavioral changes and the menstrual cycle in female at a
