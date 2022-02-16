@@ -1,6 +1,14 @@
 import { React, useState, useEffect } from "react";
 import { parseISO, format, fromUnixTime, getYear, getDay } from "date-fns";
-import { Button, Alert, Container, Row, Col } from "react-bootstrap";
+import {
+  Button,
+  Alert,
+  Container,
+  Row,
+  Col,
+  Navbar,
+  Nav,
+} from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import Plan from "./Plan";
@@ -119,16 +127,83 @@ export default function Home(props) {
 
   return (
     <div
-    // className="try"
-    // style={{
-    //   backgroundImage:
-    //     "url('https://mdbcdn.b-cdn.net/img/new/slides/041.webp')",
-    // }}
+      style={{
+        backgroundImage: `url("https://i.pinimg.com/474x/54/c7/66/54c766dd1eb670c4eb97ba462192e807--super-short-hairstyles-black-women-short-hairstyles.jpg")`,
+        backgroundRepeat: "no-repeat",
+        // background: "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
+        // linearGradient: "(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
+        filter: "brightness(100%)",
+        minwidth: 100,
+        minHeight: 100,
+        backgroundSize: "100%",
+        backgroundColor: "#aaaaaa",
+      }}
     >
+      {/* className="try" */}
       <div>
-        <NavPage />
+        <container>
+          <Row style={{ backgroundColor: "#E1BEE7" }} className="text-end">
+            <Col>
+              Signed in as: <a href="#log">{currentUser.email}</a>
+            </Col>
+          </Row>
+          <Row style={{ backgroundColor: "#E1BEE7" }} className="text-end">
+            <Col>
+              <Button variant="link" onClick={handleLogOut}>
+                Log Out
+              </Button>
+            </Col>
+          </Row>
+        </container>
+        {/* <Navbar bg="primary" expand="lg">
+          <Container>
+            <Navbar.Brand>
+              <img
+                className="img-fluid"
+                style={{ height: 200, width: 300 }}
+                src="/logo.png"
+                alt="logo"
+              />
+            </Navbar.Brand>
+            <Navbar.Toggle aria-controls="basic-navbar-nav" />
+            <Navbar.Collapse id="basic-navbar-nav">
+              <Nav className="me-auto">
+                <Nav.Link href="/">Home</Nav.Link>
+                <Nav.Link href="/plan">Plan</Nav.Link>
+              </Nav>
+            </Navbar.Collapse>
+            <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                Signed in as: <a href="#login">{currentUser.email}</a>
+              </Navbar.Text>
+            </Navbar.Collapse>
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Link onClick={handleLogOut}>Log Out</Navbar.Link>
+            </Navbar.Collapse> 
+          </Container>
+        </Navbar> */}
+
+        <Navbar expand="lg" bg="primary">
+          <Container>
+            <NavPage />
+            {/* <Navbar.Toggle />
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                Signed in as: <a href="#login">{currentUser.email}</a>
+              </Navbar.Text>
+            </Navbar.Collapse>
+
+            <Navbar.Collapse className="justify-content-end">
+              <Button variant="link" onClick={handleLogOut}>
+                Log Out
+              </Button>
+            </Navbar.Collapse>  */}
+          </Container>
+        </Navbar>
+
         <Container>
-          <Row className="text-end">
+          {/* <Row className="text-end">
             <div>
               <Col>
                 {error && <Alert variant="danger">{error}</Alert>}
@@ -138,26 +213,17 @@ export default function Home(props) {
                 </div>
               </Col>
             </div>
-          </Row>
+          </Row>  */}
           <Row>
             <Col className="me-4">
-              <img
-                style={{ height: 100, width: 150 }}
-                src="/images/hello.png"
-                alt="hello"
-              ></img>
-              <p>
-                Several studies have investigated the relationship between
-                behavioral changes and the menstrual cycle in female at a
-                reproductive age.The brain and ovaries are constantly
-                interacting to create hormone level changes over the course of
-                each menstrual cycle. Different hormones dominate in different
-                cycle phases and they influence mental and physical fitness.
-                Understanding how hormone levels change during the menstrual
-                cycle can help to better anticipate symptoms, adjust routines
-                and optimize life.
-              </p>
-
+              <p
+                className="text-white"
+                style={{
+                  fontSize: "1.4em",
+                  font: "Georgia",
+                }}
+              ></p>
+              {/* 
               <img
                 src="https://www.gettyimages.com/gi-resources/images/500px/983794168.jpg"
                 alt="Getty Images"
@@ -166,24 +232,55 @@ export default function Home(props) {
                 className="n3VNCb rounded-circle"
                 data-noaft="1"
                 style={{ width: 656.936, height: 495, margin: 0 }}
-              ></img>
+              ></img> */}
             </Col>
-            <Col className="ms-4">
-              <Row className="text-end">
+            <Col
+              className="ms-4"
+              style={{
+                background:
+                  "linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5))",
+              }}
+            >
+              {/* <Row className="text-end">
                 <Col>
                   <Button variant="link" onClick={handleLogOut}>
                     Log Out
                   </Button>
                 </Col>
-              </Row>
-              <p>
-                To get customized information, please make sure you choose your
-                latest menstrual starting date.
+              </Row> */}
+
+              <h3 className="mt-4 text-white">Facts</h3>
+              <p
+                className="text-dark p-3"
+                style={{ fontSize: "1.2em", background: "#E1BEE7" }}
+              >
+                Several studies have investigated the relationship between
+                behavioral changes and the menstrual cycle in female at a
+                reproductive age. Understanding how hormone levels change during
+                the menstrual cycle can help to better anticipate symptoms,
+                adjust routines and optimize life.
               </p>
+              <p
+                style={{
+                  color: " white",
+                  opacity: 1,
+                  fontSize: "1.5em",
+                  fontWeight: "350",
+                  fontFamily: "sarif",
+                  filter: "brightness(100%)",
+                }}
+                className="lead"
+              >
+                <em>
+                  To get customized information, please make sure you choose
+                  your latest menstrual starting date.
+                </em>
+              </p>
+
               {getMsg === "You haven't selected a date, please pick one." && (
                 <div>
                   <Row>
-                    <Col>
+                    <Col style={{ color: "white" }}>
                       <h3 className="w-100 mb-4">{getMsg}</h3>
                     </Col>
                   </Row>
@@ -217,8 +314,12 @@ export default function Home(props) {
                 <div>
                   <Row className="mt-4">
                     <Col>
-                      <h6>{getMsg}</h6>
-                      <h6 className="mt-3">Change the date?</h6>
+                      <h6 className="p-3" style={{ background: "#fce4ec" }}>
+                        {getMsg}
+                      </h6>
+                      <h6 className="mt-3" style={{ color: "white" }}>
+                        <blockquote>Change the date?</blockquote>
+                      </h6>
                       <DatePicker
                         selected={selectedDate}
                         onChange={(da) => setSelectedDate(da)}
@@ -238,30 +339,34 @@ export default function Home(props) {
                   </Row>
                   <Row className="mt-4">
                     <Col>
-                      <h6>Delete your date?</h6>
+                      <h6 style={{ color: "white" }}>
+                        <strong>Delete your date?</strong>
+                      </h6>
+
                       <Button className="mb-4" onClick={deletePro}>
                         Delete
                       </Button>
                     </Col>
                   </Row>
                   <Row>
-                    <Col>
-                      <p>
-                        Each week, hormone levels including estrogen and
-                        progesterone changes.{" "}
+                    <Col
+                      style={{
+                        fontSize: "1.5em",
+                      }}
+                    >
+                      <p
+                        style={{
+                          color: "white",
+                        }}
+                      >
+                        <em>
+                          Planning key events during the days and weeks a woman
+                          possibly be more effective makes a difference. Most
+                          women can think clearly, talk influencially and
+                          achieve high results during a certain time of a month.
+                        </em>
                       </p>
-                      <p>
-                        Planning key events during the days and weeks a woman
-                        possibly be more effective makes a difference. Most
-                        women can think clearly, talk influencially and achieve
-                        high results during a certain time of a month.
-                      </p>
-                      <p>
-                        We can help you choose dates from a calendar, show
-                        expected symptoms and recommended activities week by
-                        week basis. You can benefit from making an informed
-                        decision.
-                      </p>
+
                       <Button
                         onClick={() => {
                           //

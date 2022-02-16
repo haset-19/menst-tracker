@@ -125,9 +125,14 @@ export default function Plan({ datFromDb }) {
             <div className="text-start m-4">
               <p>
                 Calendar notes can really make a difference, so consider
-                tracking your cycle to make the most of each month!  A woman’s
-                menstrual cycle is divided into four phases: • menstrual phase •
-                follicular phase • ovulation phase and luteal phase.
+                tracking your cycle to make the most of each month!  
+              </p>
+              <p style={{ color: "#607d8b" }}>
+                <strong>
+                  We can help you choose dates from a calendar, show expected
+                  symptoms and recommended activities week by week basis. You
+                  can benefit from making an informed decision.
+                </strong>
               </p>
 
               <p>
@@ -174,6 +179,13 @@ export default function Plan({ datFromDb }) {
             <Row>
               <Col>{handleSymptoms()}</Col>
               <Col>
+                {!first && (
+                  <img
+                    style={{ height: 500, width: 450 }}
+                    src="/images/hello.png"
+                    alt="hello"
+                  ></img>
+                )}
                 {first && (
                   <img
                     style={{ height: 500, width: 300 }}
