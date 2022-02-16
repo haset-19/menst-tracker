@@ -203,7 +203,7 @@ export default function Home(props) {
                     </div>
                   </Row>
 
-                  <div className="mb-4">
+                  <div className="mb-4" style={{ color: "white" }}>
                     The date you picked is {format(selectedDate, "MM/dd/yyyy")}.
                     Click the button to confirm. <br />
                     <Button
@@ -217,17 +217,17 @@ export default function Home(props) {
                 </div>
               )}
 
-              {props.datFromDb ? ( //if selectedDate is true or not empty, render selectedDate if you want, otherwise render the rest of the code after &&
+              {props.datFromDb && ( //if selectedDate is true or not empty, render selectedDate if you want, otherwise render the rest of the code after &&
                 <div>
                   <Row className="mt-4">
                     <Col>
-                      {getMsg !==
+                      {/* {getMsg !==
                         "You haven't selected a date, please pick one." && (
                         <h6 className="p-3" style={{ background: "#fce4ec" }}>
                           {" "}
                           {getMsg}
                         </h6>
-                      )}
+                      )} */}
 
                       <h6 className="mt-3" style={{ color: "white" }}>
                         <blockquote>Change the date?</blockquote>
@@ -290,9 +290,8 @@ export default function Home(props) {
                       </Button>
                     </Col>
                   </Row>
+                  )
                 </div>
-              ) : (
-                ""
               )}
             </Col>
           </Row>

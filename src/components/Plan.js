@@ -2,14 +2,7 @@ import React, { useState } from "react";
 import NavPage from "./NavPage";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  collection,
-  getDocs,
-  updateDoc,
-  doc,
-  setDoc,
-  deleteDoc,
-} from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import { format, getDate } from "date-fns";
 import { Button, Row, Col, Container } from "react-bootstrap";
@@ -28,10 +21,7 @@ export default function Plan({ datFromDb }) {
   const handlePlans = () => {
     const fullMonth = 30;
     const datePicked = format(selectedDate, "dd");
-    console.log(datePicked);
-    // console.log(datFromDb);
     const dbDate = getDate(new Date(datFromDb));
-    console.log(dbDate);
     const sevenAdded = (dbDate + 7) % fullMonth;
     const fourteenAdded = (dbDate + 14) % fullMonth;
     const twentyoneAdded = (dbDate + 21) % fullMonth;
@@ -43,9 +33,7 @@ export default function Plan({ datFromDb }) {
       const coming = await getDocs(collectionRef);
       coming.docs.forEach((doc) => {
         if (doc.id === week) {
-          console.log(`hi from ${week}`);
           setSymptoms(doc.data().Symptoms);
-          console.log(doc.data().Symptoms);
           setRecommendations(doc.data().Recommendations);
           setLoading(false);
         }
@@ -121,7 +109,7 @@ export default function Plan({ datFromDb }) {
       <NavPage />
       <Container>
         <Row>
-          <Col>
+          <Col sm={5}>
             <div className="text-start m-4">
               <p>
                 Calendar notes can really make a difference, so consider
@@ -164,22 +152,13 @@ export default function Plan({ datFromDb }) {
               >
                 Let's do it!
               </Button>
-              {/* {!loading && (
-          <ul>
-            {console.log(!loading)}
-            {symp.map((item) => {
-              console.log(item);
-              return <li key={item}>{item}</li>;
-            })}
-          </ul>
-        )} */}
             </div>
           </Col>
           <Col>
             <Row>
-              <Col>{handleSymptoms()}</Col>
+              <Col className="mt-3">{handleSymptoms()}</Col>
               <Col>
-                {!first && (
+                {!first && !second && !third && !fourth && (
                   <img
                     style={{ height: 500, width: 450 }}
                     src="/images/hello.png"
@@ -196,17 +175,25 @@ export default function Plan({ datFromDb }) {
                 {second && (
                   <img
                     className="mt-4"
-                    style={{ height: 500, width: 300 }}
+                    style={{ height: 500, width: 400 }}
                     src="/images/effective.png"
                     alt="2week"
                   ></img>
                 )}
-                {third && <img src="/images/2week.png" alt="3week"></img>}
+                {third && (
+                  <img
+                    style={{ height: 500, width: 400 }}
+                    src="/images/roseBg.png"
+                    alt="3week"
+                    className="mt-3"
+                  ></img>
+                )}
                 {fourth && (
                   <img
                     style={{ height: 600, width: 400 }}
                     src="/images/4relax.png"
                     alt="4week"
+                    className="mt-3"
                   ></img>
                 )}
               </Col>
@@ -216,9 +203,10 @@ export default function Plan({ datFromDb }) {
               <Col>
                 {second && (
                   <img
-                    style={{ height: 500, width: 300 }}
+                    style={{ height: 400, width: 400 }}
                     src="/images/2week.png"
                     alt="2week"
+                    className="mt-3"
                   ></img>
                 )}
               </Col>
