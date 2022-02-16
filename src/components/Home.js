@@ -68,7 +68,9 @@ export default function Home(props) {
             const date = fromUnixTime(dateVar.seconds);
             const dateFormatted = format(date, "MM/dd/yyyy");
             setGetMsg(`Your cyle start date is ${dateFormatted}`);
+
             props.setdateFromDb(dateFormatted);
+            console.log(props.datFromDb);
             setSelectedDate(new Date(dateFormatted));
             found = true;
           }
