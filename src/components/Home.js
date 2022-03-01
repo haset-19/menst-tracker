@@ -275,9 +275,7 @@ export default function Home(props) {
                       >
                         <em>
                           Planning key events during the days and weeks a woman
-                          possibly be more effective makes a difference. Most
-                          women can think clearly, talk influencially and
-                          achieve high results during a certain time of a month.
+                          possibly be more effective makes a difference.
                         </em>
                       </p>
 

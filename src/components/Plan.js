@@ -4,7 +4,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
-import { format, getDate } from "date-fns";
+import { addDays } from "date-fns";
 import { Button, Row, Col, Container } from "react-bootstrap";
 
 export default function Plan({ datFromDb }) {
@@ -19,13 +19,13 @@ export default function Plan({ datFromDb }) {
   const [fourth, setFourth] = useState(false);
 
   const handlePlans = () => {
-    const fullMonth = 30;
-    const datePicked = format(selectedDate, "dd");
-    const dbDate = getDate(new Date(datFromDb));
-    const sevenAdded = (dbDate + 7) % fullMonth;
-    const fourteenAdded = (dbDate + 14) % fullMonth;
-    const twentyoneAdded = (dbDate + 21) % fullMonth;
-    const twentyeightAdded = (dbDate + 29) % fullMonth;
+    console.log(selectedDate);
+    const datFromDbFormatted = new Date(datFromDb);
+
+    const sevenAdded = addDays(new Date(datFromDbFormatted), 7);
+    const fourteenAdded = addDays(new Date(datFromDbFormatted), 14);
+    const twentyoneAdded = addDays(new Date(datFromDbFormatted), 21);
+    const twentyeightAdded = addDays(new Date(datFromDbFormatted), 28);
 
     const helperFun = async (week) => {
       setLoading(true);
@@ -40,21 +40,21 @@ export default function Plan({ datFromDb }) {
       });
     };
 
-    if (datePicked >= dbDate && datePicked < sevenAdded) {
+    if (selectedDate >= datFromDbFormatted && selectedDate < sevenAdded) {
       console.log("the first week");
       helperFun("firstWeek");
       setFirst(true);
       setSecond(false);
       setThird(false);
       setFourth(false);
-    } else if (datePicked >= sevenAdded && datePicked < fourteenAdded) {
+    } else if (selectedDate >= sevenAdded && selectedDate < fourteenAdded) {
       console.log("second week");
       helperFun("secondWeek");
       setSecond(true);
       setFirst(false);
       setThird(false);
       setFourth(false);
-    } else if (datePicked >= fourteenAdded && datePicked < twentyoneAdded) {
+    } else if (selectedDate >= fourteenAdded && selectedDate < twentyoneAdded) {
       console.log("third week");
       helperFun("thirdWeek");
       setThird(true);
@@ -62,7 +62,10 @@ export default function Plan({ datFromDb }) {
       setSecond(false);
 
       setFourth(false);
-    } else if (datePicked >= twentyoneAdded && datePicked <= twentyeightAdded) {
+    } else if (
+      selectedDate >= twentyoneAdded &&
+      selectedDate <= twentyeightAdded
+    ) {
       console.log("fourth week");
       helperFun("fourthWeek");
       setFourth(true);
