@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import { format, fromUnixTime } from "date-fns";
-import { Button, Alert, Container, Row, Col, Navbar } from "react-bootstrap";
+import { Button, Container, Row, Col, Navbar } from "react-bootstrap";
 import { useAuth } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "./Home.css";

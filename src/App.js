@@ -1,6 +1,5 @@
 import "./App.css";
 import Signup from "./components/Signup";
-import { Container } from "react-bootstrap";
 import { useState } from "react";
 import { AuthProvider } from "./context/AuthContext";
 import Home from "./components/Home";
@@ -9,7 +8,6 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import PrivateRoute from "./components/PrivateRoute";
 import ForgotPassword from "./components/ForgotPassword";
 import Plan from "./components/Plan";
-import NavPage from "./components/NavPage";
 import DeleteMsg from "./components/DeleteMsg";
 
 //switch is to determine which page we are on, and route to determine which page we are going to
